@@ -1,5 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import UserNavbar from "../../components/UserNavbar";
 
 export default function UserLayout() {
-  return <div>UserLayout</div>;
+  return (
+    <div>
+      <UserNavbar />
+      <Outlet />
+    </div>
+  );
 }
