@@ -35,6 +35,17 @@ const getProduct = asyncHandler(async (req, res) => {
   }
 });
 
+const getProducts = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(201).send(products);
+  } catch (error) {
+    res.status(400).json({
+      message: "Une erreur est survenue lors de la récupération des produits",
+    });
+  }
+});
+
 const modifyProduct = asyncHandler(async (req, res) => {
   const productId = req.params.id;
   const { name, type, price, rating, warranty_years, available } = req.body;
@@ -75,4 +86,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createProduct, getProduct, modifyProduct, deleteProduct };
+module.exports = {
+  createProduct,
+  getProduct,
+  getProducts,
+  modifyProduct,
+  deleteProduct,
+};

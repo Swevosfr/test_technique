@@ -3,7 +3,9 @@ const productController = require("../controllers/productController");
 
 router.post("/product", productController.createProduct);
 
-router.get("/product", productController.getProduct);
+router.get("/product/:id", productController.getProduct);
+
+router.get("/product", productController.getProducts);
 
 router.patch("/product", productController.modifyProduct);
 
