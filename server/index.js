@@ -11,6 +11,7 @@ app.use(cors());
 
 //routes
 app.use("/auth", require("./routes/jwtAuth"));
+app.use("/product", require("./routes/product"));
 
 //connexion à la base de données
 mongoose
