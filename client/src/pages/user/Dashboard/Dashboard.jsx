@@ -1,5 +1,10 @@
 import React from "react";
+import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
-  return <div>Dashboard user</div>;
+  return (
+    <Grid item xs={8}>
+      Dashboard user
+    </Grid>
+  );
 }

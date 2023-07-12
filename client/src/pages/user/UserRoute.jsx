@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard/Dashboard";
 import Error from "../../utils/Error";
 import UserLayout from "./UserLayout";
-
 export default function UserRoute() {
   return (
     <Routes>

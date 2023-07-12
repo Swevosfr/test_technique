@@ -1,12 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import UserNavbar from "../../components/UserNavbar";
+import Grid from "@mui/material/Grid";
 
 export default function UserLayout() {
   return (
-    <div>
+    <Grid container>
       <UserNavbar />
       <Outlet />
-    </div>
+    </Grid>
   );
 }
