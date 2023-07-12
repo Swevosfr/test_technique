@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<PublicRoute />} />
-          <Route path="/user" element={<UserRoute />} />
+          <Route path="/user/*" element={<UserRoute />} />
         </Routes>
       </BrowserRouter>
     </div>
