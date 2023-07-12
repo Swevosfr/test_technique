@@ -4,7 +4,6 @@ import Layout from "./Layout";
 import Login from "./login/Login";
 import Register from "./register/Register";
 import Error from "../../utils/Error";
-import Grid from "@mui/material/Grid";
 
 export default function PublicRoute() {
   return (
