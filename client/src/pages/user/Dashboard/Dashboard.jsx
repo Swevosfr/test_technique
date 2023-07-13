@@ -8,6 +8,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -55,6 +58,29 @@ export default function Dashboard() {
     }
   };
 
+  const handleEdit = (productId) => {
+    console.log("Modifier le produit avec l'ID:", productId);
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:8089/products/product/${productId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        // Le produit a été supprimé avec succès
+        console.log("Produit supprimé avec succès");
+        // Mettre à jour la liste des produits affichés après la suppression
+        fetchProducts();
+      } else {
+        console.log("Une erreur s'est produite lors de la suppression du produit");
+      }
+    } catch (error) {
+      console.log("Une erreur s'est produite lors de la suppression du produit:", error);
+    }
+  };
+
+
   return (
     <Grid item xs={8}>
       <TableContainer component={Paper}>
@@ -68,6 +94,7 @@ export default function Dashboard() {
               <StyledTableCell align="right">
                 Garantie&nbsp;(année)
               </StyledTableCell>
+              <StyledTableCell align="right">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +110,22 @@ export default function Dashboard() {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {product.warranty_years}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <IconButton
+                    color="primary"
+                    aria-label="Modifier"
+                    onClick={() => handleEdit(product._id)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="secondary"
+                    aria-label="Supprimer"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
