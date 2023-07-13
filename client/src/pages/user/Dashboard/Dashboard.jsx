@@ -11,6 +11,10 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,6 +38,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    type: "",
+    price: "",
+    rating: "",
+    warranty_years: "",
+    available: "",
+  });
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -58,28 +72,89 @@ export default function Dashboard() {
     }
   };
 
-  const handleEdit = (productId) => {
-    console.log("Modifier le produit avec l'ID:", productId);
-  };
-
   const handleDelete = async (productId) => {
     try {
-      const response = await fetch(`http://localhost:8089/products/product/${productId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:8089/products/product/${productId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         // Le produit a été supprimé avec succès
         console.log("Produit supprimé avec succès");
         // Mettre à jour la liste des produits affichés après la suppression
         fetchProducts();
       } else {
-        console.log("Une erreur s'est produite lors de la suppression du produit");
+        console.log(
+          "Une erreur s'est produite lors de la suppression du produit"
+        );
       }
     } catch (error) {
-      console.log("Une erreur s'est produite lors de la suppression du produit:", error);
+      console.log(
+        "Une erreur s'est produite lors de la suppression du produit:",
+        error
+      );
     }
   };
 
+  const handleEdit = (product) => {
+    setSelectedProduct(product);
+    setEditForm(product);
+    setOpenModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    setEditForm({
+      ...editForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8089/products/product/${selectedProduct._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editForm),
+        }
+      );
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        const updatedProducts = products.map((product) =>
+          product._id === updatedProduct._id ? updatedProduct : product
+        );
+        setProducts(updatedProducts);
+        handleCloseModal();
+      } else {
+        console.log(
+          "Une erreur s'est produite lors de la mise à jour du produit"
+        );
+      }
+    } catch (error) {
+      console.log(
+        "Une erreur s'est produite lors de la mise à jour du produit:",
+        error
+      );
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setEditForm({
+      name: "",
+      type: "",
+      price: "",
+      rating: "",
+      warranty_years: "",
+      available: "",
+    });
+    setSelectedProduct(null);
+  };
 
   return (
     <Grid item xs={8}>
@@ -115,7 +190,7 @@ export default function Dashboard() {
                   <IconButton
                     color="primary"
                     aria-label="Modifier"
-                    onClick={() => handleEdit(product._id)}
+                    onClick={() => handleEdit(product)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -132,6 +207,63 @@ export default function Dashboard() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            minWidth: 400,
+          }}
+        >
+          <h2>Modifier le produit</h2>
+          <TextField
+            name="name"
+            label="Nom"
+            value={editForm.name}
+            onChange={handleInputChange}
+            fullWidth
+          />
+          <TextField
+            name="type"
+            label="Type"
+            value={editForm.type}
+            onChange={handleInputChange}
+            fullWidth
+          />
+          <TextField
+            name="price"
+            label="Prix"
+            value={editForm.price}
+            onChange={handleInputChange}
+            fullWidth
+          />
+          <TextField
+            name="rating"
+            label="Note"
+            value={editForm.rating}
+            onChange={handleInputChange}
+            fullWidth
+          />
+          <TextField
+            name="warranty_years"
+            label="Garantie (années)"
+            value={editForm.warranty_years}
+            onChange={handleInputChange}
+            fullWidth
+          />
+          <Button variant="contained" onClick={handleUpdate}>
+            Enregistrer
+          </Button>
+          <Button variant="outlined" onClick={handleCloseModal}>
+            Annuler
+          </Button>
+        </Box>
+      </Modal>
     </Grid>
   );
 }
