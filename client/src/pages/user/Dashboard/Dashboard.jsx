@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -29,19 +29,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(nom, type, prix, note, garantie) {
-  return { nom, type, prix, note, garantie };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function Dashboard() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:8089/products/product");
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(data);
+      } else {
+        console.log(
+          "Une erreur s'est produite lors de la récupération des produits"
+        );
+      }
+    } catch (error) {
+      console.log(
+        "Une erreur s'est produite lors de la récupération des produits:",
+        error
+      );
+    }
+  };
+
   return (
     <Grid item xs={8}>
       <TableContainer component={Paper}>
@@ -58,15 +71,19 @@ export default function Dashboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {products.map((product) => (
+              <StyledTableRow key={product._id}>
                 <StyledTableCell component="th" scope="row">
-                  {row.name}
+                  {product.name}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                <StyledTableCell align="right">{product.type}</StyledTableCell>
+                <StyledTableCell align="right">{product.price}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {product.rating}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {product.warranty_years}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
