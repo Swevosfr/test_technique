@@ -30,7 +30,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -81,9 +80,7 @@ export default function Dashboard() {
         }
       );
       if (response.ok) {
-        // Le produit a été supprimé avec succès
         console.log("Produit supprimé avec succès");
-        // Mettre à jour la liste des produits affichés après la suppression
         fetchProducts();
       } else {
         console.log(
@@ -169,6 +166,7 @@ export default function Dashboard() {
               <StyledTableCell align="right">
                 Garantie&nbsp;(année)
               </StyledTableCell>
+              <StyledTableCell align="right">Disponibilité</StyledTableCell>
               <StyledTableCell align="right">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -185,6 +183,9 @@ export default function Dashboard() {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {product.warranty_years}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {product.available ? "Disponible" : "Non Disponible"}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <IconButton
@@ -240,6 +241,7 @@ export default function Dashboard() {
           <TextField
             name="price"
             label="Prix"
+            type="number"
             value={editForm.price}
             onChange={handleInputChange}
             fullWidth
@@ -248,6 +250,7 @@ export default function Dashboard() {
           <TextField
             name="rating"
             label="Note"
+            type="number"
             value={editForm.rating}
             onChange={handleInputChange}
             fullWidth
@@ -255,17 +258,35 @@ export default function Dashboard() {
           />
           <TextField
             name="warranty_years"
-            label="Garantie (années)"
+            label="Garantie"
+            type="number"
             value={editForm.warranty_years}
             onChange={handleInputChange}
             fullWidth
             sx={{ mb: 2 }}
           />
-          <Button variant="contained" onClick={handleUpdate}>
+          <TextField
+            name="available"
+            label="Disponible"
+            value={editForm.available}
+            onChange={handleInputChange}
+            select
+            fullWidth
+            sx={{ mb: 2 }}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value={true}>Oui</option>
+            <option value={false}>Non</option>
+          </TextField>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUpdate}
+            fullWidth
+          >
             Enregistrer
-          </Button>
-          <Button variant="outlined" onClick={handleCloseModal}>
-            Annuler
           </Button>
         </Box>
       </Modal>
