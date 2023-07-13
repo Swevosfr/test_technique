@@ -33,8 +33,10 @@ export default function Register() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        const responseData = await response.json();
+        // Enregistrement du token dans le localStorage
+        localStorage.setItem("token", responseData.token);
+        // Connexion réussie, redirection vers la page appropriée
         navigate("/user/dashboard");
         // Effectuer des actions supplémentaires après l'inscription réussie
       } else {

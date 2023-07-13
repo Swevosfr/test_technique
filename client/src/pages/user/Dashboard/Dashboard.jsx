@@ -54,7 +54,14 @@ export default function Dashboard() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:8089/products");
+      const response = await fetch("http://localhost:8089/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // Ajout du token à l'entête Authorization
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.ok) {
         const data = await response.json();
         setProducts(data);
@@ -77,6 +84,11 @@ export default function Dashboard() {
         `http://localhost:8089/products/${productId}`,
         {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // Ajout du token à l'entête Authorization
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       if (response.ok) {
@@ -116,6 +128,8 @@ export default function Dashboard() {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            // Ajout du token à l'entête Authorization
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(editForm),
         }

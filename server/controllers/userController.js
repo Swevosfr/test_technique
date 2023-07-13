@@ -29,13 +29,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
   console.log("creation de l'utilisateur", user);
   if (user) {
-    res.status(201).json({ _id: user.id, email: user.email });
+    const token = jwt.sign(
+      {
+        user: {
+          email: user.email,
+          password: user.password,
+          id: user.id,
+        },
+      },
+      process.env.jwtSecret,
+      { expiresIn: "24h" }
+    );
+    res.status(200).json({ token });
   } else {
     res.status(400);
     throw new Error("Les données de l'utilisateur ne sont pas valide");
   }
-
-  res.json({ message: "Register the user" });
 });
 
 const loginUser = asyncHandler(async (req, res) => {

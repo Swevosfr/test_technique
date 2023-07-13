@@ -41,6 +41,9 @@ const Login = () => {
       });
 
       if (response.ok) {
+        const responseData = await response.json();
+        // Enregistrement du token dans le localStorage
+        localStorage.setItem("token", responseData.token);
         // Connexion réussie, redirection vers la page appropriée
         navigate("/user/dashboard");
       } else {

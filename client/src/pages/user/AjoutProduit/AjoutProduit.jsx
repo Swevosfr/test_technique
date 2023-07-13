@@ -48,6 +48,8 @@ export default function AjoutProduit() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Ajout du token à l'entête Authorization
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(submitData),
       });
