@@ -227,6 +227,7 @@ export default function Dashboard() {
             value={editForm.name}
             onChange={handleInputChange}
             fullWidth
+            sx={{ mb: 2 }}
           />
           <TextField
             name="type"
@@ -234,6 +235,7 @@ export default function Dashboard() {
             value={editForm.type}
             onChange={handleInputChange}
             fullWidth
+            sx={{ mb: 2 }}
           />
           <TextField
             name="price"
@@ -241,6 +243,7 @@ export default function Dashboard() {
             value={editForm.price}
             onChange={handleInputChange}
             fullWidth
+            sx={{ mb: 2 }}
           />
           <TextField
             name="rating"
@@ -248,6 +251,7 @@ export default function Dashboard() {
             value={editForm.rating}
             onChange={handleInputChange}
             fullWidth
+            sx={{ mb: 2 }}
           />
           <TextField
             name="warranty_years"
@@ -255,6 +259,7 @@ export default function Dashboard() {
             value={editForm.warranty_years}
             onChange={handleInputChange}
             fullWidth
+            sx={{ mb: 2 }}
           />
           <Button variant="contained" onClick={handleUpdate}>
             Enregistrer
