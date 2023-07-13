@@ -23,20 +23,14 @@ export default function AjoutProduit() {
     price: "",
     rating: "",
     warranty_years: "",
-    available: "",
+    available: "false",
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    let inputValue = value;
-    if (name === "available") {
-      inputValue = value === "oui";
-    }
-
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: inputValue,
+      [name]: value,
     }));
   };
 
@@ -44,25 +38,30 @@ export default function AjoutProduit() {
     event.preventDefault();
 
     try {
+      // Convertissez la valeur de available en booléen avant de l'envoyer.
+      const submitData = {
+        ...formData,
+        available: formData.available === "true",
+      };
+
       const response = await fetch("http://localhost:8089/products/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       if (response.ok) {
         const product = await response.json();
         console.log("Produit ajouté avec succès", product);
-        // Réinitialiser le formulaire après l'ajout du produit
         setFormData({
           name: "",
           type: "",
           price: "",
           rating: "",
           warranty_years: "",
-          available: true, // Réinitialiser à true au lieu de ""
+          available: "false",
         });
       } else {
         console.log("Une erreur s'est produite lors de l'ajout du produit");
@@ -168,11 +167,11 @@ export default function AjoutProduit() {
                     labelId="available"
                     id="available"
                     name="available"
-                    value={formData.available ? "oui" : "non"}
+                    value={formData.available}
                     onChange={handleInputChange}
                   >
-                    <MenuItem value="oui">Oui</MenuItem>
-                    <MenuItem value="non">Non</MenuItem>
+                    <MenuItem value="true">Oui</MenuItem>
+                    <MenuItem value="false">Non</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

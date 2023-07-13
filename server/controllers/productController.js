@@ -3,7 +3,15 @@ const Product = require("../models/product_model");
 
 const createProduct = asyncHandler(async (req, res) => {
   const { name, type, price, rating, warranty_years, available } = req.body;
-  if (!name || !type || !price || !rating || !warranty_years || !available) {
+  if (
+    !name ||
+    !type ||
+    !price ||
+    !rating ||
+    !warranty_years ||
+    available === null ||
+    available === undefined
+  ) {
     res.status(400);
     throw new Error("Veuillez remplir tous les champs");
   }
