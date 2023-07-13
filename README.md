@@ -10,4 +10,4 @@ faire un "pnpm install".
 Pour pouvoir lancer la partie backend,
 faire un pnpm install, rajouter un .env avec les variables MONGO_URI et jwtSecret.
 La variable MONGO_URI correspond au lien du cluster créé sur Mongodb (site web).
-POur le jwtSecret, choisissez celui que vous voulez.
+Pour le jwtSecret, choisissez celui que vous voulez.
