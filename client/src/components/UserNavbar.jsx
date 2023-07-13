@@ -6,11 +6,21 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
 import { navbarStyles } from "./styles";
 import { userNavbarItems } from "./const/userNavbarItems";
+
 export default function UserNavbar() {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Supprime le token du localstorage
+    localStorage.removeItem("token");
+    // Redirige vers la page de login
+    navigate("/login");
+  };
 
   return (
     <Drawer sx={navbarStyles.drawer} variant="permanent" anchor="left">
@@ -25,6 +35,14 @@ export default function UserNavbar() {
         ))}
       </List>
       <Divider />
+      <List>
+        <ListItem button onClick={handleLogout}>
+          <ListItemIcon sx={navbarStyles.icons}>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText sx={navbarStyles.text} primary="Se déconnecter" />
+        </ListItem>
+      </List>
     </Drawer>
   );
 }
