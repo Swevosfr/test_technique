@@ -12,6 +12,6 @@ export const userNavbarItems = [
     id: 1,
     icon: <CategoryIcon />,
     label: "Ajouter un produit",
-    route: "route",
+    route: "ajout-produit",
   },
 ];
