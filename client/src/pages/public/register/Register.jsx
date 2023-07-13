@@ -46,7 +46,6 @@ export default function Register() {
       }
     } catch (error) {
       console.log(error);
-      // Gérer les erreurs d'exception
     }
   };
   return (
