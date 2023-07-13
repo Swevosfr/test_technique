@@ -14,7 +14,7 @@ Test technique poour l'entreprise Les Bons Artisans
 - Une fois le tout terminé, faire un "nodemon index" pour démarrer le serveur.
 
 ## Routes disponibles
-Format: ( http:// <baseURL> : <port> / <route> )
+ <p> Format: ( http:// <baseURL> : <port> / <route> ) </p>
 
 - /auth/login
 - /auth/register
