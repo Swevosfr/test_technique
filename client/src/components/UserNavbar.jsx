@@ -35,6 +35,8 @@ export default function UserNavbar() {
         ))}
       </List>
       <Divider />
+      <div style={{ flexGrow: 1 }} />{" "}
+      {/* This empty div will push the button to the bottom */}
       <List>
         <ListItem button onClick={handleLogout}>
           <ListItemIcon sx={navbarStyles.icons}>
