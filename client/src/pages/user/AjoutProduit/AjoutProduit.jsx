@@ -38,7 +38,7 @@ export default function AjoutProduit() {
     event.preventDefault();
 
     try {
-      // Convertissez la valeur de available en booléen avant de l'envoyer.
+      // Converti la valeur de available en booléen avant de l'envoyer.
       const submitData = {
         ...formData,
         available: formData.available === "true",

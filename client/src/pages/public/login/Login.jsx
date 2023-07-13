@@ -52,10 +52,7 @@ const Login = () => {
         throw new Error(errorData.message);
       }
     } catch (error) {
-      // Gestion des erreurs réseau ou autres
       console.error(error);
-      // Affichage de l'erreur à l'utilisateur
-      // (vous pouvez utiliser une librairie de notification ou afficher un message d'erreur directement dans le formulaire)
     }
   };
 

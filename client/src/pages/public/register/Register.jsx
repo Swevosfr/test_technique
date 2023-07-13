@@ -11,8 +11,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function Register() {
@@ -36,13 +34,11 @@ export default function Register() {
         const responseData = await response.json();
         // Enregistrement du token dans le localStorage
         localStorage.setItem("token", responseData.token);
-        // Connexion réussie, redirection vers la page appropriée
+        // Connexion réussie, redirection vers la page
         navigate("/user/dashboard");
-        // Effectuer des actions supplémentaires après l'inscription réussie
       } else {
         const errorData = await response.json();
         console.log(errorData);
-        // Gérer les erreurs de l'inscription
       }
     } catch (error) {
       console.log(error);
