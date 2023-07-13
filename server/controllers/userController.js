@@ -46,7 +46,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   const user = await User.findOne({ email });
 
-  //comparer le mot de passe en input et le mot de passe en base de donnéess
+  // Comparer le mot de passe en input et le mot de passe en base de données
   if (user && (await bcrypt.compare(password, user.password))) {
     const token = jwt.sign(
       {
@@ -62,9 +62,8 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(200).json({ token });
   } else {
     res.status(401);
-    throw new Error({ message: "L'email ou le mot de passe n'est pas valide" });
+    throw new Error("L'email ou le mot de passe n'est pas valide");
   }
-  res.json({ message: "Login the user" });
 });
 
 const test = asyncHandler(async (req, res) => {
