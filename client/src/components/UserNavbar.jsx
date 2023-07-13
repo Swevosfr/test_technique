@@ -6,7 +6,6 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
 import { navbarStyles } from "./styles";
