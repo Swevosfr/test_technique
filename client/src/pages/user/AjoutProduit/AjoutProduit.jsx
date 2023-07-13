@@ -44,7 +44,7 @@ export default function AjoutProduit() {
         available: formData.available === "true",
       };
 
-      const response = await fetch("http://localhost:8089/products/product", {
+      const response = await fetch("http://localhost:8089/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

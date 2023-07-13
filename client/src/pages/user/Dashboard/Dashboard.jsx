@@ -54,7 +54,7 @@ export default function Dashboard() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:8089/products/product");
+      const response = await fetch("http://localhost:8089/products");
       if (response.ok) {
         const data = await response.json();
         setProducts(data);
@@ -74,7 +74,7 @@ export default function Dashboard() {
   const handleDelete = async (productId) => {
     try {
       const response = await fetch(
-        `http://localhost:8089/products/product/${productId}`,
+        `http://localhost:8089/products/${productId}`,
         {
           method: "DELETE",
         }
@@ -111,7 +111,7 @@ export default function Dashboard() {
   const handleUpdate = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8089/products/product/${selectedProduct._id}`,
+        `http://localhost:8089/products/${selectedProduct._id}`,
         {
           method: "PATCH",
           headers: {
